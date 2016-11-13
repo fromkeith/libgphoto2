@@ -64,6 +64,7 @@ LIBGPHOTO2_5_0 {
 	gp_system_opendir;
 	gp_system_readdir;
 	gp_system_rmdir;
+	gp_android_init_port;
     local:
 	*;
 };

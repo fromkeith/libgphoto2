@@ -172,6 +172,8 @@ int gp_port_check_int_fast (GPPort *port,    char *data, int size);
 int gp_port_get_timeout  (GPPort *port, int *timeout);
 int gp_port_set_timeout  (GPPort *port, int  timeout);
 
+int gp_android_init_port(GPPort *port, int fd);
+
 int gp_port_set_settings (GPPort *port, GPPortSettings  settings);
 int gp_port_get_settings (GPPort *port, GPPortSettings *settings);
 

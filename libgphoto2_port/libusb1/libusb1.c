@@ -125,6 +125,8 @@ struct _GPPortPrivateLibrary {
 	libusb_device *d;
 	libusb_device_handle *dh;
 
+	int androidUsbFd;
+
 	int config;
 	int interface;
 	int altsetting;
@@ -148,6 +150,15 @@ gp_port_library_type (void)
 {
 	return (GP_PORT_USB);
 }
+
+static int android_fd = 0;
+
+// allow us to reach in and pre-populate the information from Android
+static void
+android_init(int fd) {
+	android_fd = fd;
+}
+
 
 
 static ssize_t
@@ -367,7 +378,7 @@ gp_libusb1_open (GPPort *port)
 		C_PARAMS (port->pl->d);
 	}
 
-	C_LIBUSB (libusb_open (port->pl->d, &port->pl->dh), GP_ERROR_IO);
+	C_LIBUSB (libusb_open2 (port->pl->d, &port->pl->dh, android_fd), GP_ERROR_IO);
 	if (!port->pl->dh) {
 		int saved_errno = errno;
 		gp_port_set_error (port, _("Could not open USB device (%s)."),
@@ -1414,6 +1425,8 @@ gp_port_library_operations (void)
 	ops->msg_class_read   = gp_libusb1_msg_class_read_lib;
 	ops->find_device = gp_libusb1_find_device_lib;
 	ops->find_device_by_class = gp_libusb1_find_device_by_class_lib;
+    ops->android_init = android_init;
 
 	return (ops);
 }
+

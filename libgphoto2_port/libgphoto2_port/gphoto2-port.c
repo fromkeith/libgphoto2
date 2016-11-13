@@ -571,6 +571,18 @@ gp_port_get_timeout (GPPort *port, int *timeout)
         return GP_OK;
 }
 
+/** Set the file descriptor for android
+*/
+int
+gp_android_init_port(GPPort *port, int fd) {
+	GP_LOG_D ("Initing android...");
+	C_PARAMS (port);
+	CHECK_INIT (port);
+
+	CHECK_RESULT (port->pc->ops->android_init(fd));
+	return (GP_OK);
+}
+
 /**
  * \brief Set port settings
  * \param port a #GPPort
