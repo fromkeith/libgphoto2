@@ -18,6 +18,7 @@ This fork gets libgphoto2 building for android.
 
 ### Extra File
 - build_android.sh
+	- You will need to run autoreconf before running this file. authreconf will generate the configure file!
 	- Configures the build for armeabi
 	- Be sure to change the paths to your libusb location, and ndk locations.
 - make_android.sh
@@ -31,7 +32,7 @@ This fork gets libgphoto2 building for android.
 	rpl -R -e libgphoto2.so.6 "libgphoto2.so\x00\x00" kbin/lib/libgphoto2.so
 	rpl -R -e libgphoto2_port.so.12 "libgphoto2_port.so\x00\x00\x00" kbin/lib/libgphoto2.so
 	rpl -R -e libgphoto2_port.so.12 "libgphoto2_port.so\x00\x00\x00" kbin/lib/libgphoto2_port.re.so
-``
+```
 
 - The camera and port libraries that get output aren't prefixed with 'lib'... android doesn't like this.
 	- They also reference the versioned shared libraries...
